@@ -14,12 +14,10 @@ class player{
       display(){
         
         var pos = this.body.position;
-        push();
-        translate(pos.x,pos.y);
-        rotate(this.body.angle);
+        
         fill("yellow");
         imageMode(CENTER);
-        image(this.image,0,0,30,30);
-        pop();
+        image(this.image,pos.x,pos.y,30,30);
+        
       }
 }
