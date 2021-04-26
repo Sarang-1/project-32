@@ -10,7 +10,6 @@ class Box{
         this.width = 30;
         this.height = 40;
         this.vis = 255;
-        this.drop = loadSound("drop.wav");
         this.image = loadImage("images/block1.png");
         World.add(world, this.body);
       }
