@@ -1,22 +1,69 @@
-
+// declaring the constants
 const Engine = Matter.Engine;
 const World = Matter.World;
 const Bodies = Matter.Bodies;
 const Constraint = Matter.Constraint;
 
-
+//declaring all the boxes
 var box1,box2,box3,box4,box5,box6,box7,box8,box9,box10,box11,box12,box13,box14,box15,box16,box17,box18,box19,box20;
 var box21,box22,box23,box24,box25;
+
+//declaring the three platforms
 var ground1,ground2,ground3;
 
+// declaring player and slingshot
 var poly,slingShot;
 
-function setup() {
-  createCanvas(1200,600);
+//the backgrounds
+var backgroundImg,back2,back;
 
+// declaring gamestate
+var gamestate;
+
+// variables for score and background sound
+var bgsound,score=0;
+
+// for the icons
+var giveup, instructions, start;
+
+// and the icon images
+var giveupimg, instructionsimg, startimg;
+
+// box necessary in playing the sound only once
+var box;
+
+//the world time
+var hours;
+
+function preload(){
+
+  // getting the background images as per the world time
+  getTime();
+
+  //loading background sound
+  bgsound = loadSound("bg.mp3");
+
+  //loading the icon images
+  instructionsimg = loadImage("images/instructions.png");
+  giveupimg = loadImage("images/GiveUp.png");
+  startimg = loadImage("images/start.png");
+
+  //loading the first window background
+  back = loadImage("images/background.jpg")
+}
+
+
+
+
+function setup() {
+  //setting canvas size according to the devise size
+  createCanvas(windowWidth,windowHeight);
+
+  //creating engine and world
   engine = Engine.create();
   world = engine.world;
 
+  //creating all the boxes
 box1 = new blueb(460,400);
 box2 = new blueb(490,400);
 box3 = new blueb(520,400);
@@ -49,24 +96,111 @@ box24 = new greenb(930,180);
 
 box25 = new pinkb(900,140);
 
+
+//creating the player polygon
 poly = new player(210,300);
 
-ground1 = new Ground(600,600,1200,10);
+//creating three base grounds
+ground1 = new Ground(width/2,600,width,10);
 ground2 = new Ground(550,430,280,10);
 ground3 = new Ground(900,250,320,10);
 
+
+//slingshot for attaching player with a fixed point
 slingShot = new SlingShot(poly.body,{x: 200, y: 310});
 
 
+//setting up gamestate for different windows
+gamestate = 0;
+
+
+//instructions icon
+instructions = createSprite(width/2,50);
+instructions.addImage(instructionsimg);
+instructions.scale = 0.3;
+
+
+//give up icon
+giveup = createSprite(width-150,50);
+giveup.addImage(giveupimg);
+giveup.scale = 0.5;
+
+//start icon
+start = createSprite(width/2,height-200);
+start.addImage(startimg);
+start.scale = 0.2;
+
+//box for not repeating sound everytime the start button is clicked
+box = createSprite(200,200,20,20);
+box.visible = false;
 }
 
+
+
+
+
+
 function draw() {
-  background(50);  
+
+  // Pre game or first window code
+  if(gamestate === 0 && backgroundImg){
+    // the first window background
+    background(back);
+
+    // first window texts
+    fill("orange");
+    textSize(30);
+    textFont("segoe print");
+    text("1. Drag the Hexagonal Stone and Release it to launch it towards the blocks.",50,100+50);
+
+    fill("lightgreen");
+    text("2. Press SPACE key to get another chance.",50,150+50);
+
+    fill("pink");
+    text("3. Dropping each block gives you 10 points.",50,200+50);
+
+    fill("yellow");
+    text("4. Background will be set according to the world time.",50,250+50);
+  
+    fill("lightblue");
+    text("5. Press on start to continue :-",50,300+50);
+
+    //visibility for the icons for first window
+    start.visible = true;
+    instructions.visible = true;
+    giveup.visible = false;
+
+
+    //pressing over start to continue the game
+    if(mousePressedOver(start)){
+      gamestate = 1;
+
+      // visibility of icons for second window
+      start.visible = false;
+      instructions.visible = false;
+      giveup.visible = true;
+
+      // for playing background sound on pressing the start button
+      if(box.x === 200){
+        bgsound.setVolume(0.5);
+        bgsound.loop();
+        bgsound.play();
+        box.x = 300;
+      }
+    }
+  }
+  
+
+  //Code for starting the game
+  if(backgroundImg && gamestate === 1){
+  background(backgroundImg);  
   Engine.update(engine);
   
-strokeWeight(1.5);
-stroke(0);
+  // setting the stroke for text
+  strokeWeight(1.5);
+  stroke(0);
   
+  //displaying all the boxes
   box1.display();
   box2.display();
   box3.display();
@@ -93,35 +227,126 @@ stroke(0);
   box24.display();
   box25.display();
   
+  //displaying the player
   poly.display();
 
+  //displaying slingshot line
   stroke("lightblue");
   slingShot.display();
 
+
+  //displaying the grounds
   ground1.display();
   ground2.display();
   ground3.display();
 
-  fill(255);
-  textSize(30);
-  text("Drag the Hexagonal Stone and Release it to launch it towards the blocks",150,50);
-  text("Press SPACE key to get another chance",150,100);
+  // for getting score on dropping each box
+    box1.score();
+    box2.score();
+    box3.score();
+    box4.score();
+    box5.score();
+    box6.score();
+    box7.score();
+    box8.score();
+    box9.score();
+    box10.score();
+    box11.score();
+    box12.score();
+    box13.score();
+    box14.score();
+    box15.score();
+    box16.score();
+    box17.score();
+    box18.score();
+    box19.score();
+    box20.score();
+    box21.score();
+    box22.score();
+    box23.score();
+    box24.score();
+    box25.score();
+
+    // some important text
+    fill("orange");
+    textSize(30);
+    textFont("segoe print");
+    text("SCORE: "+score,150,150);
+
+    fill("lightgreen");
+    text("Press SPACE key to get another chance",50,100);
+
+
+    // displaying the world time
+  if(hours<=12){
+  text("World Time: "+ hours + " AM",550,50);
+  } else {
+  text("World Time: "+ hours + " PM",550,50);
+  }
+
+  
+  // for returning to first window
+  if(mousePressedOver(giveup)){
+    gamestate = 0;
+  }
+  
+}
+
+//displaying the icons
+drawSprites();
 }
 
 
+
+
+// function to launch the player hexagon
 function mouseDragged(){
   Matter.Body.setPosition(poly.body, {x: mouseX , y: mouseY});
 }
 
 
+
+
+
+// function for shooting the hexagon
 function mouseReleased(){
   slingShot.fly();
   
 }
 
+
+
+
+// function to rejoin slingshot on pressing space
 function keyPressed(){
   if(keyCode === 32){
     Matter.Body.setPosition(poly.body, {x:200 , y:300});
     slingShot.rejoin();
   }
+  
+}
+
+
+
+
+
+// function to get current world time
+async function getTime(){
+    
+  var response = await fetch("http://worldclockapi.com/api/json/est/now");
+  var responseJSON = await response.json();
+  var datetime = responseJSON.currentDateTime;
+  hours = datetime.slice(11,13);
+  
+ // getting background images as per the world time
+  if(hours >= 07 && hours <= 16){
+      back2 = "images/day.jpg";
+  } else if(hours = 07 && hours >= 05 || hours >=16 && hours <= 17){
+      back2 = "images/twilight.jpg";
+  } else {
+      back2 = "images/night.jpg";
+  }
+
+
+  backgroundImg = loadImage(back2);
 }

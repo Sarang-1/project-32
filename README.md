@@ -1,2 +1,2 @@
 # p5.play-boilerplate
-Boiler plate for p5.play
+Not too difficult but a very interesting game with amazing graphics and sound effects

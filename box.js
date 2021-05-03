@@ -10,6 +10,7 @@ class Box{
         this.width = 30;
         this.height = 40;
         this.vis = 255;
+        
         this.image = loadImage("images/block1.png");
         World.add(world, this.body);
       }
@@ -21,6 +22,7 @@ class Box{
         image(this.image,pos.x,pos.y, this.width,this.height);
         } else {
           World.remove(world,this.body);
+          
           push();
           this.vis = this.vis-5;
           translate(pos.x,pos.y);
@@ -28,6 +30,15 @@ class Box{
           imageMode(CENTER);
           image(this.image,0,0,this.width,this.height);
           pop();
+          
         }
+      }
+        score(){
+        if(this.vis < 250 && this.vis > 199){
+          
+          score++;
+          
+        }
+
       }
 }
