@@ -160,7 +160,7 @@ function draw() {
     text("3. Dropping each block gives you 10 points.",50,200+50);
 
     fill("yellow");
-    text("4. Background will be set according to the world time.",50,250+50);
+    text("4. Background will be set according to the time.",50,250+50);
   
     fill("lightblue");
     text("5. Press on start to continue :-",50,300+50);
@@ -279,9 +279,9 @@ function draw() {
 
     // displaying the world time
   if(hours <= 12){
-  text("World Time: "+ hours + " AM",550,50);
+  text("Time: "+ hours + " AM",550,50);
   } else if(hours > 12) {
-  text("World Time: "+ hours + " PM",550,50);
+  text("Time: "+ hours + " PM",550,50);
   } 
 
   
@@ -333,9 +333,9 @@ function keyPressed(){
 // function to get current world time
 async function getTime(){
     
-  var response = await fetch("http://worldclockapi.com/api/json/est/now");
+  var response = await fetch("https://worldtimeapi.org/api/timezone/Asia/Kolkata");
   var responseJSON = await response.json();
-  var datetime = responseJSON.currentDateTime;
+  var datetime = responseJSON.datetime;
   hours = datetime.slice(11,13);
   console.log(hours);
   
