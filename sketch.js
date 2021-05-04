@@ -145,24 +145,9 @@ box.visible = false;
 
 
 function draw() {
-
-  if(gamestate === 0){
-    fill("orange");
-    textSize(30);
-    textFont("segoe print");
-    text("try reloading the page",100,100);
-    start.visible = false;
-    giveup.visible = false;
-    
-  if(backgroundimg){
-    gamestate = 1;
-  }
-    
-  }
-  
     
   // Pre game or first window code
-  if(gamestate === 1 && backgroundImg){
+  if(gamestate === 0 && backgroundImg){
     // the first window background
     background(back);
 
@@ -192,7 +177,7 @@ function draw() {
 
     //pressing over start to continue the game
     if(mousePressedOver(start)){
-      gamestate = 2;
+      gamestate = 1;
 
       // visibility of icons for second window
       start.visible = false;
@@ -211,7 +196,7 @@ function draw() {
   
 
   //Code for starting the game
-  if(backgroundImg && gamestate === 2){
+  if(backgroundImg && gamestate === 1){
   background(backgroundImg);  
   Engine.update(engine);
   
