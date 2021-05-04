@@ -128,9 +128,10 @@ giveup.scale = 0.5;
 giveup.visible = false;
 
 //start icon
-start = createSprite(width/2,height-200);
+start = createSprite(width/2,height-100);
 start.addImage(startimg);
 start.scale = 0.2;
+start.visible = false;
 
 
 //box for not repeating sound everytime the start button is clicked
@@ -145,11 +146,13 @@ box.visible = false;
 
 function draw() {
 
-  if(gamestate === 0 && frameCount % 50 === 0){
+  if(gamestate === 0){
     fill("orange");
     textSize(30);
     textFont("segoe print");
     text("try reloading the page",100,100);
+    start.visible = false;
+    giveup.visible = false;
     
   if(backgroundimg){
     gamestate = 1;
