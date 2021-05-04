@@ -118,17 +118,20 @@ gamestate = 0;
 instructions = createSprite(width/2,50);
 instructions.addImage(instructionsimg);
 instructions.scale = 0.3;
+instructions.visible = false;
 
 
 //give up icon
 giveup = createSprite(width-150,50);
 giveup.addImage(giveupimg);
 giveup.scale = 0.5;
+giveup.visible = false;
 
 //start icon
 start = createSprite(width/2,height-200);
 start.addImage(startimg);
 start.scale = 0.2;
+
 
 //box for not repeating sound everytime the start button is clicked
 box = createSprite(200,200,20,20);
@@ -142,8 +145,21 @@ box.visible = false;
 
 function draw() {
 
+  if(gamestate === 0 && frameCount % 50 === 0){
+    fill("orange");
+    textSize(30);
+    textFont("segoe print");
+    text("try reloading the page",100,100);
+    
+  if(backgroundimg){
+    gamestate = 1;
+  }
+    
+  }
+  
+    
   // Pre game or first window code
-  if(gamestate === 0 && backgroundImg){
+  if(gamestate === 1 && backgroundImg){
     // the first window background
     background(back);
 
@@ -173,7 +189,7 @@ function draw() {
 
     //pressing over start to continue the game
     if(mousePressedOver(start)){
-      gamestate = 1;
+      gamestate = 2;
 
       // visibility of icons for second window
       start.visible = false;
@@ -192,7 +208,7 @@ function draw() {
   
 
   //Code for starting the game
-  if(backgroundImg && gamestate === 1){
+  if(backgroundImg && gamestate === 2){
   background(backgroundImg);  
   Engine.update(engine);
   
