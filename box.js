@@ -24,11 +24,13 @@ class Box{
           World.remove(world,this.body);
           
           push();
+          if(this.vis > 0){
           this.vis = this.vis-5;
           translate(pos.x,pos.y);
           tint(255,this.vis);
           imageMode(CENTER);
           image(this.image,0,0,this.width,this.height);
+          }
           pop();
           
         }

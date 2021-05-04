@@ -16,7 +16,7 @@ class player{
         var pos = this.body.position;
         
         fill("yellow");
-        imageMode(RADIUS);
+        imageMode(CENTER);
         image(this.image,pos.x,pos.y,35,35);
         
       }

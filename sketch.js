@@ -182,7 +182,7 @@ function draw() {
 
       // for playing background sound on pressing the start button
       if(box.x === 200){
-        bgsound.setVolume(0.5);
+        bgsound.setVolume(0.2);
         bgsound.loop();
         bgsound.play();
         box.x = 300;
@@ -278,11 +278,11 @@ function draw() {
 
 
     // displaying the world time
-  if(hours<=12){
+  if(hours <= 12){
   text("World Time: "+ hours + " AM",550,50);
-  } else {
+  } else if(hours > 12) {
   text("World Time: "+ hours + " PM",550,50);
-  }
+  } 
 
   
   // for returning to first window
@@ -337,6 +337,7 @@ async function getTime(){
   var responseJSON = await response.json();
   var datetime = responseJSON.currentDateTime;
   hours = datetime.slice(11,13);
+  console.log(hours);
   
  // getting background images as per the world time
   if(hours >= 07 && hours <= 16){
