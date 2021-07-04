@@ -285,7 +285,7 @@ function draw() {
   if(hours <= 12){
   text("Time: "+ hours + " AM",550,50);
   } else if(hours > 12) {
-  text("Time: "+ hours + " PM",550,50);
+  text("Time: "+ hours%12 + " PM",550,50);
   } 
 
   
@@ -337,12 +337,7 @@ function keyPressed(){
 // function to get current world time
 async function getTime(){
     
-  var response = await fetch("https://worldtimeapi.org/api/timezone/Asia/Kolkata");
-  var responseJSON = await response.json();
-  var datetime = responseJSON.datetime;
-  hours = datetime.slice(11,13);
-  console.log(hours);
-  
+  var hours = random(1,23);  
  // getting background images as per the world time
   if(hours >= 07 && hours <= 16){
       back2 = "images/day.jpg";
